@@ -1,0 +1,111 @@
+FLOWCHART SISTEM PENDUKUNG KEPUTUSAN PEMILIHAN SUPPLIER TERBAIK
+===============================================================================
+
+START
+  │
+  ▼
+[1. START PROGRAM]
+  │
+  ▼
+[2. INISIALISASI DATABASE & KONEKSI]
+  │
+  ▼
+[3. TAMPILKAN HALAMAN UTAMA]
+  │
+  ├─────────────────────────────────────────────────────────────────────────┐
+  │                                                                         │
+  ▼                                                                         ▼
+[4. PILIH MENU]                                                    [4a. TAMPILKAN BERANDA]
+  │                                                                   │
+  ├─────────────────────────────────────────────────────────────────────┤
+  │                                                                     │
+  ▼                                                                     ▼
+[5. DATA SUPPLIER]                                              [5a. TAMPILKAN STATISTIK]
+  │                                                                   │
+  ├─────[5a. TAMBAH SUPPLIER] ──→ [5a1. INPUT DATA] ──→ [5a2. SIMPAN KE DB]
+  │                                                                     │
+  ├─────[5b. EDIT SUPPLIER]   ──→ [5b1. UPDATE DATA] ──→ [5b2. SIMPAN KE DB]
+  │                                                                     │
+  └─────[5c. HAPUS SUPPLIER]   ──→ [5c1. HAPUS DARI DB]
+  │
+  ▼
+[6. DATA KRITERIA]
+  │
+  └─────[6a. EDIT BOBOT] ──→ [6a1. UPDATE BOBOT KE DB]
+  │
+  ▼
+[7. PROSES METODE SPK]
+  │
+  ├─────────────────────────────────────────────────────────────────────────┤
+  │                                                                         │
+  ▼                                                                         ▼
+[8. METODE SAW]                                                  [9. METODE SMART]
+  │                                                                   │
+  ├─[8a. INPUT MATRIKS KEPUTUSAN]                                 ├─[9a. INPUT MATRIKS KEPUTUSAN]
+  │                                                                   │
+  ├─[8b. NORMALISASI MATRIKS]                                     ├─[9b. HITUNG UTILITY VALUE]
+  │     Rumus: Rij = Xij / Max(Xij) [benefit]                           Rumus: U = (X - Min)/(Max - Min) [benefit]
+  │            Rij = Min(Xij) / Xij [cost]                                     U = (Max - X)/(Max - Min) [cost]
+  │                                                                   │
+  ├─[8c. HITUNG NILAI PREFERENSI]                                 ├─[9c. HITUNG NILAI AKHIR]
+  │     Vi = Σ(Wj × Rij)                                                 Ui = Σ(Wj × Uij)
+  │                                                                   │
+  └─[8d. RANKING & OUTPUT]                                        └─[9d. RANKING & OUTPUT]
+  │                                                                   │
+  ├─────────────────────────────────────────────────────────────────────────┤
+  │                                                                         │
+  ▼                                                                         ▼
+[10. PROFILE MATCHING]                                          [11. GOAL PROGRAMMING]
+  │                                                                   │
+  ├─[10a. INPUT NILAI AKTUAL]                                     ├─[11a. INPUT TARGET]
+  │                                                                   │
+  ├─[10b. HITUNG GAP]                                             ├─[11b. HITUNG ALOKASI]
+  │      GAP = Nilai Aktual - Target                                    Alokasi berdasarkan prioritas
+  │                                                                   │
+  ├─[10c. KONVERSI GAP KE BOBOT]                                 ├─[11c. HITUNG FUNGSI TUJUAN]
+  │      Bobot: 5(GAP=0), 4.5(GAP=±1), dst                             Min Z = P1(d1+) + P2(d2+) + P3(d3-)
+  │                                                                   │
+  ├─[10d. HITUNG NILAI ASPEK]                                     ├─[11d. HITUNG METRIK]
+  │      CF & SF per aspek                                              Total Biaya, Rata-rata Cacat, Rata-rata Waktu
+  │                                                                   │
+  └─[10e. RANKING & OUTPUT]                                      └─[11e. OUTPUT ALOKASI]
+  │
+  ▼
+[12. PERBANDINGAN HASIL]
+  │
+  ├─[12a. BANDINGKAN RANKING KEEMPAT METODE]
+  │
+  ├─[12b. HITUNG RATA-RATA RANKING]
+  │
+  └─[12c. TAMPILKAN KESIMPULAN]
+  │
+  ▼
+[13. TAMPILKAN HASIL KE USER]
+  │
+  ▼
+[14. END]
+
+===============================================================================
+KETERANGAN SIMBOL:
+⚪ = Start/End
+📦 = Proses
+🔷 = Input/Output
+🔶 = Decision
+🔘 = Database
+
+===============================================================================
+FLOW LOGIKA PERHITUNGAN TIAP METODE:
+
+SAW (Simple Additive Weighting):
+  Input Matrix → Normalisasi → Pembobotan → Penjumlahan → Ranking
+
+SMART:
+  Input Matrix → Hitung Utility → Normalisasi Bobot → Penjumlahan → Ranking
+
+Profile Matching:
+  Input Nilai Aktual → Hitung GAP → Konversi ke Bobot → CF & SF → Nilai Aspek → Ranking
+
+Goal Programming:
+  Input Target & Kapasitas → Alokasi Berdasarkan Harga → Hitung Metrik → Evaluasi Target
+
+===============================================================================

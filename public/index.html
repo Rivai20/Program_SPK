@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SPK Pemilihan Supplier Terbaik</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>SPK PEMILIHAN SUPPLIER TERBAIK</h1>
+      <div class="subtitle">Kelompok 14 - SISTEM PENDUKUNG KEPUTUSAN 6IFP1</div>
+    </div>
+
+    <div class="splash-text">
+      <h2>❤️ Saya bangga jadi anak ibu dan bapak ❤️</h2>
+    </div>
+
+    <div class="ketentuan">
+      <h3>1. KETENTUAN TIM</h3>
+      <p>Project dikerjakan oleh : Muhammad Rivai Lie & Elgyandri Kadondi.T</p>
+      
+      <h3>2. TUJUAN PROJECT</h3>
+      <p>Mahasiswa mampu: memahami konsep Sistem Pendukung Keputusan, mengimplementasikan metode SPK, melakukan perhitungan manual, membangun sistem berbasis program, membandingkan hasil antar metode, menganalisis perbedaan keputusan dari tiap metode.</p>
+      
+      <h3>3. METODE YANG WAJIB DIGUNAKAN</h3>
+      <div class="methods">
+        <div class="method">1. SAW (Simple Additive Weighting)</div>
+        <div class="method">2. SMART (Simple Multi Attribute Rating Technique)</div>
+        <div class="method">3. Profile Matching</div>
+        <div class="method">4. Goal Programming</div>
+      </div>
+      
+      <h3>4. KETENTUAN TEMA</h3>
+      <p>Tema: Pemilihan Supplier Terbaik untuk Perusahaan Manufaktur</p>
+      <p>Kriteria: Harga, Tingkat Cacat, Ketepatan Waktu, Jarak Distribusi</p>
+    </div>
+
+    <div class="nav-menu">
+      <button class="nav-btn active" onclick="showPage('dashboard')">Dashboard</button>
+      <button class="nav-btn" onclick="showPage('supplier')">Data Supplier</button>
+      <button class="nav-btn" onclick="showPage('kriteria')">Data Kriteria</button>
+      <button class="nav-btn" onclick="showPage('bobot')">Input Bobot</button>
+      <button class="nav-btn" onclick="showPage('saw')">SAW</button>
+      <button class="nav-btn" onclick="showPage('smart')">SMART</button>
+      <button class="nav-btn" onclick="showPage('profile')">Profile Matching</button>
+      <button class="nav-btn" onclick="showPage('goal')">Goal Programming</button>
+      <button class="nav-btn" onclick="showPage('compare')">Perbandingan</button>
+    </div>
+
+    <div id="dashboard" class="page active">
+      <div class="dashboard-stats">
+        <div class="stat-card">
+          <div class="stat-value" id="total-supplier">0</div>
+          <div class="stat-label">Total Supplier</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="total-kriteria">0</div>
+          <div class="stat-label">Total Kriteria</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="metode-terbaik">-</div>
+          <div class="stat-label">Supplier Terbaik (SAW)</div>
+        </div>
+      </div>
+      <div class="info-panel">
+        <h3>Informasi Project</h3>
+        <p><strong>Studi Kasus:</strong> Pemilihan Supplier Terbaik untuk Perusahaan Manufaktur</p>
+        <p><strong>Kriteria:</strong> Harga (Cost), Tingkat Cacat (Cost), Ketepatan Waktu (Benefit), Jarak (Cost)</p>
+        <p><strong>Alternatif:</strong> 5 Supplier (PT Maju Jaya, CV Sejahtera, UD Makmur, PT Cepat Kirim, CV Sumber Rejeki)</p>
+      </div>
+    </div>
+
+    <div id="supplier" class="page">
+      <div class="page-header">
+        <h2>Data Supplier</h2>
+        <button class="btn-add" onclick="openSupplierModal()">+ Tambah Supplier</button>
+      </div>
+      <div class="table-container">
+        <table id="supplier-table">
+          <thead>
+            <tr><th>ID</th><th>Kode</th><th>Nama Supplier</th><th>Harga (Rp)</th><th>Cacat (%)</th><th>Tepat Waktu (%)</th><th>Jarak (km)</th><th>Aksi</th></tr>
+          </thead>
+          <tbody id="supplier-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="kriteria" class="page">
+      <div class="page-header">
+        <h2>Data Kriteria</h2>
+      </div>
+      <div class="table-container">
+        <table id="kriteria-table">
+          <thead><tr><th>ID</th><th>Kode</th><th>Nama Kriteria</th><th>Sifat</th><th>Bobot SAW (%)</th><th>Bobot SMART (%)</th></tr></thead>
+          <tbody id="kriteria-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="bobot" class="page">
+      <div class="page-header">
+        <h2>Input Bobot Kriteria</h2>
+      </div>
+      <div class="bobot-form" id="bobot-form"></div>
+      <button class="btn-save" onclick="saveBobot()">Simpan Bobot</button>
+    </div>
+
+    <div id="saw" class="page">
+      <div class="page-header">
+        <h2>Metode SAW (Simple Additive Weighting)</h2>
+      </div>
+      <div id="saw-content"></div>
+    </div>
+
+    <div id="smart" class="page">
+      <div class="page-header">
+        <h2>Metode SMART</h2>
+      </div>
+      <div id="smart-content"></div>
+    </div>
+
+    <div id="profile" class="page">
+      <div class="page-header">
+        <h2>Metode Profile Matching</h2>
+      </div>
+      <div id="profile-content"></div>
+    </div>
+
+    <div id="goal" class="page">
+      <div class="page-header">
+        <h2>Metode Goal Programming</h2>
+      </div>
+      <div id="goal-content"></div>
+    </div>
+
+    <div id="compare" class="page">
+      <div class="page-header">
+        <h2>Perbandingan Hasil Semua Metode</h2>
+      </div>
+      <div id="compare-content"></div>
+    </div>
+  </div>
+
+  <div id="supplierModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeSupplierModal()">&times;</span>
+      <h3 id="modal-title">Tambah Supplier</h3>
+      <input type="hidden" id="supplier-id">
+      <div class="form-group">
+        <label>Kode Supplier</label>
+        <input type="text" id="supplier-kode" placeholder="Contoh: S6">
+      </div>
+      <div class="form-group">
+        <label>Nama Supplier</label>
+        <input type="text" id="supplier-nama" placeholder="Nama Supplier">
+      </div>
+      <div class="form-group">
+        <label>Harga (Rp/unit)</label>
+        <input type="number" id="supplier-harga" placeholder="Harga">
+      </div>
+      <div class="form-group">
+        <label>Tingkat Cacat (%)</label>
+        <input type="number" step="0.1" id="supplier-cacat" placeholder="Cacat">
+      </div>
+      <div class="form-group">
+        <label>Ketepatan Waktu (%)</label>
+        <input type="number" step="0.1" id="supplier-waktu" placeholder="Waktu">
+      </div>
+      <div class="form-group">
+        <label>Jarak Distribusi (km)</label>
+        <input type="number" id="supplier-jarak" placeholder="Jarak">
+      </div>
+      <button class="btn-save" onclick="saveSupplier()">Simpan</button>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/saw.js"></script>
+  <script src="/js/smart.js"></script>
+  <script src="/js/profile.js"></script>
+  <script src="/js/goal.js"></script>
+  <script src="/js/compare.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
